@@ -1,111 +1,60 @@
-class Account {
-  nickname?: string;
+// class KeyValuePair<K, V> {
+//   constructor(public key: K, public value: V) {}
+// }
 
-  constructor(
-    public readonly id: number,
-    public name: string,
-    private _balance: number
-  ) {}
+// let pair = new KeyValuePair('1', 'Eugene');
 
-  deposit(amount: number): void {
-    if (amount <= 0) throw new Error('Invalid amount');
-    this._balance += amount;
-  }
+// class ArrayUtils {
+//   static wrapInArray<T>(value: T) {
+//     return [value];
+//   }
+// }
 
-  get balance(): number {
-    return this._balance;
-  }
-}
+// let numbers = ArrayUtils.wrapInArray(2);
 
-const account = new Account(1, 'Eugene', 0);
-account.deposit(200);
-account.balance;
+// interface Result<T> {
+//   data: T | null;
+//   error: string | null;
+// }
 
-class SeatAssignment {
-  //index signature property
-  [seatNumber: string]: string;
-}
+// function APIFetch<T>(url: string): Result<T> {
+//   return { data: null, error: null };
+// }
 
-const seats = new SeatAssignment();
-seats.A1 = 'Eugene';
-seats['A2'] = 'Serj';
+// interface User {
+//   username: string;
+// }
 
-class Ride {
-  private static _activeRides: number = 0;
+// interface Product {
+//   title: string;
+// }
 
-  start(): void {
-    Ride._activeRides++;
-  }
+// let result = APIFetch<User>('url');
+// result.data?.username;
 
-  stop(): void {
-    Ride._activeRides--;
-  }
+// class Man {
+//   constructor(public name: string) {}
+// }
 
-  static get activeRides() {
-    return Ride._activeRides;
-  }
-}
+// class Builder extends Man {}
 
-const ride1 = new Ride();
-const ride2 = new Ride();
+// function echo<T extends Man>(value: T): T {
+//   return value;
+// }
 
-ride1.start();
-ride2.start();
+// echo(new Builder('Eugene'));
 
-class Person {
-  constructor(public firstName: string, public lastName: string) {}
-
-  get fullName() {
-    return `${this.firstName} ${this.lastName}`;
-  }
-
-  walk() {
-    console.log('Walking...');
-  }
-}
-
-class Student extends Person {
-  constructor(public studentID: number, firstName: string, lastName: string) {
-    super(firstName, lastName);
-  }
-
-  takeTest() {
-    console.log('Taking a test...');
-  }
-}
-
-class Teacher extends Person {
-  override get fullName() {
-    return `Professor ${super.fullName}`;
-  }
-}
-
-abstract class Shape {
-  constructor(public color: string) {}
-
-  abstract render(): void;
-}
-
-interface Calendar {
+interface Product {
   name: string;
-  addEvent(): void;
-  removeEvent(): void;
+  price: number;
 }
 
-interface CloudCalendar extends Calendar {
-  sync(): void;
+class Store<T> {
+  private _objects: T[] = [];
+
+  add(obj: T): void {
+    this._objects.push(obj);
+  }
 }
 
-class GoogleCalendar implements CloudCalendar {
-  constructor(public name: string) {}
-
-  sync(): void {
-    throw new Error('Method not implemented.');
-  }
-  addEvent(): void {
-    throw new Error('Method not implemented.');
-  }
-  removeEvent(): void {
-    throw new Error('Method not implemented.');
-  }
-}
+let store = new Store<Product>();
